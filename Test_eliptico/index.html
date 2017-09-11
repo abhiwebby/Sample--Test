@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Test_Eliptico</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+    <link href="css/animate.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="css/core.css">
+
+      <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+            <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+            <!--[if lt IE 9]>
+              <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+              <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+            <![endif]-->
+
+  </head>
+
+
+	<body>
+    <div class="container-fluid" ng-app="myApp" >
+      <div class="row">      
+        <div class="col-md-12">
+          <!-- Navbar starts here -->
+      
+
+          <nav class="nav-hold navbar">
+            <!-- <h4>Urban Yoga</h4> -->
+            <div class="logo-holder">
+              <img src="images/logo.jpg" alt="Urban Yoga" class="img-responsive" />              
+            </div>
+
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+            </div>
+            
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <div class="nav-holdrt">
+              <ul class="nav nav-tabs navbar-right">
+                <li class="active"><a data-toggle="tab" href="#home">Dashboard</a></li>
+                <li><a data-toggle="tab" href="#menu1">Sign In</a></li>
+                <li><a data-toggle="tab" href="#menu2">Classes</a></li>
+                <li><a data-toggle="tab" href="#menu3">Workshops</a></li>
+                <li><a data-toggle="tab" href="#menu4">Appointments</a></li>
+                <li><a data-toggle="tab" href="#menu5">Client Home</a></li>
+                <li><a data-toggle="tab" href="#menu6">Retail</a></li>
+              </ul>
+
+              <div class="tab-content">
+                <div id="home" class="tab-pane fade in active">
+                  <ul class="list-unstyled list-dw">
+                    <li>
+                      <a href="">Dashboard</a>
+                    </li>
+                    <li class="active">
+                      <a href="" class="acty">Business Overview</a>
+                    </li>
+                    <li>
+                      <a href="">Schedule</a>
+                    </li>
+                    <li>
+                      <a href="">Reports</a>
+                    </li>
+                  </ul>
+                </div>
+                <div id="menu1" class="tab-pane fade">
+                  <h4 class="list-dw">Sign In</h4>
+                </div>
+                <div id="menu2" class="tab-pane fade">
+                  <h4 class="list-dw">Classes</h4>
+                </div>
+                <div id="menu3" class="tab-pane fade">
+                  <h4 class="list-dw">Workshops</h4>
+                </div>
+                <div id="menu4" class="tab-pane fade">
+                  <h4 class="list-dw">Appointments</h4>
+                </div>
+                <div id="menu5" class="tab-pane fade">
+                  <h4 class="list-dw">Client Home</h4>
+                </div>
+                <div id="menu6" class="tab-pane fade">
+                  <h4 class="list-dw">Retail</h4>
+                </div>
+              </div>  
+            </div>   
+            </div>           
+          </nav> 
+          <!-- Navbar ends here -->
+        </div>
+         
+
+        <div class="main-cont" ng-controller="mainCtrl">
+          <div class="col-md-2 col-sm-2 col-xs-12">
+          <!-- left panel starts here -->
+          <div class="left-hold">
+            <a href="#">
+              <i class="fa fa-plus-square fa-5x"></i>
+            </a>
+            <h5 class="text-center">New program</h5>
+
+          </div>
+          <!-- left panel ends here -->
+          </div>
+
+          <div class="col-md-10 col-sm-10 col-xs-12">
+          <!-- right panel starts here -->
+          <div class="right-hold" ng-repeat="yogaList in yogaLists">
+            <div class="right-part1">
+              <div class="part1-lt">
+                <h4>{{yogaList.Name}}</h4>
+              </div>   
+              <div class="part1-rt">
+                <button class="btn">
+                  <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
+                </button>
+              </div>   
+            </div>
+
+            <div class="right-part2" ng-controller="BarCtrl">
+              <h5> Sales by month </h5>
+              <canvas id="bar" class="chart chart-bar" chart-data="[yogaList.Sales.CurrentYear,yogaList.Sales.PreviousYear]" chart-labels="labels" chart-series="series">
+              </canvas>
+            </div>
+
+            <div class="right-part3" ng-controller="LineCtrl">
+              <div class="table-responsive">
+                <table class="table">
+                  <thead>
+                    <tr>
+                      <th class="text-center">Total Monthly</th>
+                      <th class="text-center">Current</th>
+                      <th class="text-center">1-Year</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>Sales</td>
+                      <td>{{yogaList.TotalMonthlySales | currency: "$"}}</td>
+                      <td>
+                        <canvas id="line" class="chart chart-line" chart-data="data" chart-labels="labels" chart-series="series" chart-options="options" chart-dataset-override="datasetOverride" chart-click="onClick" width="60" height="20"></canvas>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <div class="right-part4" ng-controller="subCtrl" ng-show="showMe">
+              <div class="table-responsive">
+                <table class="table">
+                  <thead>
+                    <tr>
+                      <th class="text-center">Price Name</th>
+                      <th class="text-center">Current</th>
+                      <th class="text-center">1-Year</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr ng-repeat="yogaInner in yogaInnerLists | limitTo : 7">
+                      <td>{{yogaInner.Name}}</td>
+                      <td>{{yogaInner.Sales | currency: "$"}}</td>
+                      <td ng-controller="LineCtrl">
+                        <canvas id="line" class="chart chart-line" chart-data="data" chart-labels="labels" chart-series="series" chart-options="options" chart-dataset-override="datasetOverride" chart-click="onClick" width="40" height="10"></canvas>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <div class="right-part5">
+              <a href="#" ng-click="myFunc()">{{ showMe ? 'Less' : 'More'}}</a>
+            </div>
+        
+          </div>
+          <!-- right panel ends here -->          
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+
+      
+    <script src="js/jquery-1.11.3.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/angular.min.js"></script>
+    <script src="js/Chart.min.js"></script>
+    <script src="js/angular-chart.min.js"></script>
+    <script src="js/app.js"></script>  
+	</body>
+</html>
